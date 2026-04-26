@@ -1,0 +1,12 @@
+{
+  "extends": "../typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@repo/auth": ["../auth/src/index.ts"]
+    }
+  },
+  "include": ["src"]
+}

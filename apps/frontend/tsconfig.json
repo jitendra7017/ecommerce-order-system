@@ -1,0 +1,22 @@
+{
+  "extends": "../../packages/config/tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["DOM", "ES2022"],
+    "types": ["vite/client"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@repo/types": ["../../packages/types/src/index.ts"],
+      "@repo/constants": ["../../packages/constants/src/index.ts"],
+      "@repo/errors": ["../../packages/errors/src/index.ts"],
+      "@repo/utils": ["../../packages/utils/src/index.ts"],
+      "@repo/api-contracts": ["../../packages/api-contracts/src/index.ts"],
+      "@repo/auth": ["../../packages/auth/src/index.ts"]
+    }
+  },
+  "include": ["src", "vite.config.ts"]
+}
