@@ -9,6 +9,23 @@ import { asyncHandler } from "../../middleware/async-handler.js";
 export const productRouter = Router();
 
 productRouter.get("/", asyncHandler(productController.list));
-productRouter.post("/", authGuard, roleGuard(USER_ROLES.ADMIN), validate(upsertProductSchema), asyncHandler(productController.create));
-productRouter.put("/:id", authGuard, roleGuard(USER_ROLES.ADMIN), validate(upsertProductSchema), asyncHandler(productController.update));
-productRouter.delete("/:id", authGuard, roleGuard(USER_ROLES.ADMIN), asyncHandler(productController.remove));
+productRouter.post(
+  "/",
+  authGuard,
+  roleGuard(USER_ROLES.ADMIN),
+  validate(upsertProductSchema),
+  asyncHandler(productController.create),
+);
+productRouter.put(
+  "/:id",
+  authGuard,
+  roleGuard(USER_ROLES.ADMIN),
+  validate(upsertProductSchema),
+  asyncHandler(productController.update),
+);
+productRouter.delete(
+  "/:id",
+  authGuard,
+  roleGuard(USER_ROLES.ADMIN),
+  asyncHandler(productController.remove),
+);

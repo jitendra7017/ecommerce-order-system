@@ -211,7 +211,8 @@ describe("AdminProductsPage", () => {
     expect(screen.getByRole("button", { name: /next/i })).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: /next/i }));
 
-    await waitFor(() => expect(adminService.listProducts).toHaveBeenCalledWith({ page: 2, limit: 10 }));
+    await waitFor(() =>
+      expect(adminService.listProducts).toHaveBeenCalledWith({ page: 2, limit: 10 }),
+    );
   });
 });
-

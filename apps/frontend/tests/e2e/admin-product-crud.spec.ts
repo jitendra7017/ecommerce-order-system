@@ -42,4 +42,3 @@ test.describe("admin products CRUD (happy path)", () => {
     await expect(page.getByRole("row", { name: new RegExp(name) })).toHaveCount(0);
   });
 });
-

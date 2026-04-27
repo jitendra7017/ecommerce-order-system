@@ -8,10 +8,14 @@ export function AppShell() {
   const location = useLocation();
   const queryClient = useQueryClient();
   const session = getSession();
-  const fullName = [session?.claims.firstName, session?.claims.lastName].filter(Boolean).join(" ").trim();
+  const fullName = [session?.claims.firstName, session?.claims.lastName]
+    .filter(Boolean)
+    .join(" ")
+    .trim();
   const displayName = fullName || (session ? session.claims.role : "");
   const badgeText =
-    session?.claims.firstName?.trim().charAt(0).toUpperCase() || (session?.claims.role === "admin" ? "A" : "U");
+    session?.claims.firstName?.trim().charAt(0).toUpperCase() ||
+    (session?.claims.role === "admin" ? "A" : "U");
 
   const onLogout = async () => {
     clearToken();
@@ -29,19 +33,32 @@ export function AppShell() {
       </header>
 
       <nav aria-label="Primary navigation" className="app-nav">
-        <NavLink to="/products" className={({ isActive }) => `nav-link ${isActive ? "nav-link-active" : ""}`}>
+        <NavLink
+          to="/products"
+          className={({ isActive }) => `nav-link ${isActive ? "nav-link-active" : ""}`}
+        >
           Products
         </NavLink>
-        <NavLink to="/cart" className={({ isActive }) => `nav-link ${isActive ? "nav-link-active" : ""}`}>
+        <NavLink
+          to="/cart"
+          className={({ isActive }) => `nav-link ${isActive ? "nav-link-active" : ""}`}
+        >
           Cart
         </NavLink>
-        <NavLink to="/orders" className={({ isActive }) => `nav-link ${isActive ? "nav-link-active" : ""}`}>
+        <NavLink
+          to="/orders"
+          className={({ isActive }) => `nav-link ${isActive ? "nav-link-active" : ""}`}
+        >
           Orders
         </NavLink>
         <span className="nav-spacer" />
         {session ? (
           <details className="profile-menu">
-            <summary className="profile-badge" aria-label="Profile menu" data-testid="profile-menu-trigger">
+            <summary
+              className="profile-badge"
+              aria-label="Profile menu"
+              data-testid="profile-menu-trigger"
+            >
               <span aria-hidden="true">{badgeText}</span>
             </summary>
             <div className="profile-menu-card">
@@ -69,4 +86,3 @@ export function AppShell() {
     </div>
   );
 }
-

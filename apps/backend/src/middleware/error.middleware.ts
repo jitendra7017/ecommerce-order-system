@@ -7,7 +7,10 @@ import { type MessageKey, translate } from "../i18n/translate.js";
 import { sendError } from "../lib/http-response.js";
 
 const isPrismaNotFoundError = (err: unknown): err is { code: string } =>
-  typeof err === "object" && err !== null && "code" in err && (err as { code?: unknown }).code === "P2025";
+  typeof err === "object" &&
+  err !== null &&
+  "code" in err &&
+  (err as { code?: unknown }).code === "P2025";
 
 const resolveMessage = (req: Request, key: MessageKey): string =>
   typeof req.t === "function" ? req.t(key) : translate(defaultLanguage, key);

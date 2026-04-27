@@ -39,4 +39,3 @@ export const adminService = {
     return productService.remove(id);
   },
 };
-

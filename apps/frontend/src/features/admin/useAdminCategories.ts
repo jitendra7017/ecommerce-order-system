@@ -19,4 +19,3 @@ export function useAdminCategories() {
 
   return { categoriesQuery, createMutation };
 }
-

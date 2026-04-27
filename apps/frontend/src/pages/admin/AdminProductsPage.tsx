@@ -6,12 +6,13 @@ import type { UpsertProductRequest } from "@/features/products/types";
 import { adminProductSchema } from "@/features/admin/schemas";
 import { useAdminProducts } from "@/features/admin/useAdminProducts";
 import { PaginationControls } from "@/shared/ui/PaginationControls";
-import { useToast } from "@/shared/ui/toast/ToastProvider";
+import { useToast } from "@/shared/ui/toast/useToast";
 
 export function AdminProductsPage() {
   const [page, setPage] = useState(1);
   const pageSize = 10;
-  const { categoriesQuery, productsQuery, createMutation, updateMutation, deleteMutation } = useAdminProducts(page, pageSize);
+  const { categoriesQuery, productsQuery, createMutation, updateMutation, deleteMutation } =
+    useAdminProducts(page, pageSize);
   const [editing, setEditing] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const toast = useToast();
@@ -60,19 +61,31 @@ export function AdminProductsPage() {
 
   useEffect(() => {
     if (createMutation.isError) {
-      toast.error(createMutation.error instanceof Error ? createMutation.error.message : "Product create failed");
+      toast.error(
+        createMutation.error instanceof Error
+          ? createMutation.error.message
+          : "Product create failed",
+      );
     }
   }, [createMutation.error, createMutation.isError, toast]);
 
   useEffect(() => {
     if (updateMutation.isError) {
-      toast.error(updateMutation.error instanceof Error ? updateMutation.error.message : "Product update failed");
+      toast.error(
+        updateMutation.error instanceof Error
+          ? updateMutation.error.message
+          : "Product update failed",
+      );
     }
   }, [toast, updateMutation.error, updateMutation.isError]);
 
   useEffect(() => {
     if (deleteMutation.isError) {
-      toast.error(deleteMutation.error instanceof Error ? deleteMutation.error.message : "Product delete failed");
+      toast.error(
+        deleteMutation.error instanceof Error
+          ? deleteMutation.error.message
+          : "Product delete failed",
+      );
     }
   }, [deleteMutation.error, deleteMutation.isError, toast]);
 
@@ -92,7 +105,11 @@ export function AdminProductsPage() {
   const products = productPage?.items ?? [];
   const total = productPage?.total ?? 0;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
-  const busy = isSubmitting || createMutation.isPending || updateMutation.isPending || deleteMutation.isPending;
+  const busy =
+    isSubmitting ||
+    createMutation.isPending ||
+    updateMutation.isPending ||
+    deleteMutation.isPending;
   const [name, price, stock, categoryId] = watch(["name", "price", "stock", "categoryId"]);
   const isSaveEnabled =
     !busy &&
@@ -113,7 +130,13 @@ export function AdminProductsPage() {
 
   if (productsQuery.isLoading) return <p>Loading products...</p>;
   if (productsQuery.isError) {
-    return <p>{productsQuery.error instanceof Error ? productsQuery.error.message : "Failed to load products"}</p>;
+    return (
+      <p>
+        {productsQuery.error instanceof Error
+          ? productsQuery.error.message
+          : "Failed to load products"}
+      </p>
+    );
   }
 
   const openCreateModal = () => {
@@ -156,7 +179,8 @@ export function AdminProductsPage() {
           </thead>
           <tbody>
             {products.map((product) => {
-              const categoryName = categories.find((c) => c.id === product.categoryId)?.name ?? "Unknown";
+              const categoryName =
+                categories.find((c) => c.id === product.categoryId)?.name ?? "Unknown";
               return (
                 <tr key={product.id}>
                   <td>{product.name}</td>
@@ -195,16 +219,31 @@ export function AdminProductsPage() {
       <PaginationControls page={page} totalPages={totalPages} onPageChange={setPage} />
 
       {isModalOpen ? (
-        <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={editing ? "Edit product" : "Create product"}>
+        <div
+          className="modal-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label={editing ? "Edit product" : "Create product"}
+        >
           <div className="modal-card">
             <div className="modal-header">
               <h3 className="panel-title">{editing ? "Edit product" : "Create product"}</h3>
-              <button type="button" className="btn btn-secondary" onClick={closeModal} disabled={busy}>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={closeModal}
+                disabled={busy}
+              >
                 Close
               </button>
             </div>
 
-            <form id="admin-product-form" onSubmit={handleSubmit(onSubmit)} noValidate className="form-grid">
+            <form
+              id="admin-product-form"
+              onSubmit={handleSubmit(onSubmit)}
+              noValidate
+              className="form-grid"
+            >
               <div className="form-field">
                 <label htmlFor="product-name">
                   Name <span className="required-asterisk">*</span>
@@ -231,7 +270,9 @@ export function AdminProductsPage() {
                   onFocus={handleNumericFocus}
                   {...register("price", { valueAsNumber: true })}
                 />
-                {errors.price?.message ? <p className="form-error">{errors.price.message}</p> : null}
+                {errors.price?.message ? (
+                  <p className="form-error">{errors.price.message}</p>
+                ) : null}
               </div>
 
               <div className="form-field">
@@ -247,7 +288,9 @@ export function AdminProductsPage() {
                   onFocus={handleNumericFocus}
                   {...register("stock", { valueAsNumber: true })}
                 />
-                {errors.stock?.message ? <p className="form-error">{errors.stock.message}</p> : null}
+                {errors.stock?.message ? (
+                  <p className="form-error">{errors.stock.message}</p>
+                ) : null}
               </div>
 
               <div className="form-field">
@@ -266,16 +309,28 @@ export function AdminProductsPage() {
                     </option>
                   ))}
                 </select>
-                {errors.categoryId?.message ? <p className="form-error">{errors.categoryId.message}</p> : null}
+                {errors.categoryId?.message ? (
+                  <p className="form-error">{errors.categoryId.message}</p>
+                ) : null}
               </div>
             </form>
 
             <div className="form-actions">
-              <button type="submit" form="admin-product-form" className="btn btn-primary" disabled={!isSaveEnabled}>
+              <button
+                type="submit"
+                form="admin-product-form"
+                className="btn btn-primary"
+                disabled={!isSaveEnabled}
+              >
                 {editing ? "Save changes" : "Save product"}
               </button>
               {editing ? (
-                <button type="button" className="btn btn-secondary" disabled={busy} onClick={openCreateModal}>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  disabled={busy}
+                  onClick={openCreateModal}
+                >
                   Switch to create
                 </button>
               ) : null}
@@ -286,4 +341,3 @@ export function AdminProductsPage() {
     </section>
   );
 }
-

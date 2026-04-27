@@ -3,4 +3,3 @@ export function makeJwt(payload: Record<string, unknown>): string {
   const body = btoa(JSON.stringify(payload));
   return `${header}.${body}.signature`;
 }
-

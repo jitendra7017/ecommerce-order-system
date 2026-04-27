@@ -15,7 +15,9 @@ export function useCartManagement() {
     queryKey: ["cart.get", isGuest ? "guest" : "user"],
     queryFn: async () => (isGuest ? guestCartService.get() : cartService.get()),
     select: (data): ReturnType<typeof guestCartService.get> =>
-      isGuest ? (data as ReturnType<typeof guestCartService.get>) : mapCartResponseToViewModel(data as CartGetResponse),
+      isGuest
+        ? (data as ReturnType<typeof guestCartService.get>)
+        : mapCartResponseToViewModel(data as CartGetResponse),
   });
 
   const updateMutation = useMutation({
@@ -59,4 +61,3 @@ export function useCartManagement() {
     placeOrderMutation,
   };
 }
-

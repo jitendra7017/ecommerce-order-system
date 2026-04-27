@@ -53,4 +53,3 @@ describe("AppShell", () => {
     expect(screen.getByRole("link", { name: /cart/i })).not.toHaveAttribute("aria-current");
   });
 });
-

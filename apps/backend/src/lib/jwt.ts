@@ -4,4 +4,5 @@ import { env } from "../config/env.js";
 export const issueAccessToken = (payload: JwtUserPayload): string =>
   signUserToken(payload, env.jwtSecret, env.jwtExpiresIn);
 
-export const decodeAccessToken = (token: string): JwtUserPayload => verifyUserToken(token, env.jwtSecret);
+export const decodeAccessToken = (token: string): JwtUserPayload =>
+  verifyUserToken(token, env.jwtSecret);

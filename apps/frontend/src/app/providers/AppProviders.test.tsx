@@ -12,4 +12,3 @@ describe("AppProviders", () => {
     expect(screen.getByText("probe")).toBeInTheDocument();
   });
 });
-

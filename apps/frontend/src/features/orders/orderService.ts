@@ -1,7 +1,12 @@
 import { http } from "@/shared/api/httpClient";
 import { unwrapApiResponse, type ApiResponse } from "@/shared/api/envelope";
 import { parseAxiosError } from "@/shared/api/errors";
-import type { CancelOrderResponse, OrderListQuery, OrderListResponse, PlaceOrderResponse } from "./types";
+import type {
+  CancelOrderResponse,
+  OrderListQuery,
+  OrderListResponse,
+  PlaceOrderResponse,
+} from "./types";
 
 export const orderService = {
   async list(query: OrderListQuery): Promise<OrderListResponse> {
@@ -31,4 +36,3 @@ export const orderService = {
     }
   },
 };
-

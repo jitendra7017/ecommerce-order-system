@@ -1,4 +1,9 @@
-import { calculateTotal, createErrorResponse, createSuccessResponse, toPositiveInt } from "@repo/utils";
+import {
+  calculateTotal,
+  createErrorResponse,
+  createSuccessResponse,
+  toPositiveInt,
+} from "@repo/utils";
 
 describe("shared utils", () => {
   test("calculateTotal returns expected sum", () => {

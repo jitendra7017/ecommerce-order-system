@@ -16,7 +16,10 @@ export const orderDocs = {
               schema: {
                 allOf: [
                   { $ref: "#/components/schemas/ApiSuccess" },
-                  { type: "object", properties: { data: { $ref: "#/components/schemas/OrderListData" } } },
+                  {
+                    type: "object",
+                    properties: { data: { $ref: "#/components/schemas/OrderListData" } },
+                  },
                 ],
               },
             },
@@ -50,7 +53,9 @@ export const orderDocs = {
       tags: ["Order"],
       summary: "Cancel order and restore stock",
       security: [{ bearerAuth: [] }],
-      parameters: [{ in: "path", name: "id", required: true, schema: { type: "integer", minimum: 1 } }],
+      parameters: [
+        { in: "path", name: "id", required: true, schema: { type: "integer", minimum: 1 } },
+      ],
       responses: {
         200: {
           description: "Order cancelled",

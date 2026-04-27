@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { calculateGrandTotal, calculateLineSubtotal, mapCartResponseToViewModel } from "./cartUtils";
+import {
+  calculateGrandTotal,
+  calculateLineSubtotal,
+  mapCartResponseToViewModel,
+} from "./cartUtils";
 
 describe("cartUtils", () => {
   it("calculates line subtotal", () => {
@@ -49,4 +53,3 @@ describe("cartUtils", () => {
     expect(vm.total).toBe(200);
   });
 });
-

@@ -18,6 +18,7 @@ export const authService = {
     });
     return { id: user.id, email: user.email, role: user.role };
   },
+
   async login(payload: LoginRequest) {
     const email = payload.email.trim().toLowerCase();
     const user = await authRepository.findByEmail(email);

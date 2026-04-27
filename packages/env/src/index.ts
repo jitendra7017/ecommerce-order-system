@@ -55,6 +55,14 @@ export const loadBackendEnv = (source: NodeJS.ProcessEnv): BackendEnv => ({
   jwtExpiresIn: (source.JWT_EXPIRES_IN ?? "7d") as JwtExpiresIn,
   port: toPort(getOptionalEnv(source, "PORT"), 4000),
   corsAllowedOrigins: toAllowedOrigins(getOptionalEnv(source, "CORS_ALLOWED_ORIGINS")),
-  authRateLimitWindowMs: toPositiveInt(getOptionalEnv(source, "AUTH_RATE_LIMIT_WINDOW_MS"), 15 * 60 * 1000, "AUTH_RATE_LIMIT_WINDOW_MS"),
-  authRateLimitMax: toPositiveInt(getOptionalEnv(source, "AUTH_RATE_LIMIT_MAX"), 50, "AUTH_RATE_LIMIT_MAX"),
+  authRateLimitWindowMs: toPositiveInt(
+    getOptionalEnv(source, "AUTH_RATE_LIMIT_WINDOW_MS"),
+    15 * 60 * 1000,
+    "AUTH_RATE_LIMIT_WINDOW_MS",
+  ),
+  authRateLimitMax: toPositiveInt(
+    getOptionalEnv(source, "AUTH_RATE_LIMIT_MAX"),
+    50,
+    "AUTH_RATE_LIMIT_MAX",
+  ),
 });

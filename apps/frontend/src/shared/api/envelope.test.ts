@@ -7,7 +7,8 @@ describe("unwrapApiResponse", () => {
   });
 
   it("throws ApiError for success=false", () => {
-    expect(() => unwrapApiResponse({ success: false, message: "bad", data: null })).toThrow(ApiError);
+    expect(() => unwrapApiResponse({ success: false, message: "bad", data: null })).toThrow(
+      ApiError,
+    );
   });
 });
-

@@ -18,4 +18,3 @@ export type CartGetResponse = { items: CartItemWithIncludes[]; total: number };
 
 export type AddToCartRequest = { productId: number; quantity: number };
 export type UpdateCartItemRequest = { quantity: number };
-

@@ -13,6 +13,7 @@ const resolveNested = (obj: Record<string, unknown>, path: string): string | nul
 };
 
 export const translate = (lang: string | undefined, key: MessageKey): string => {
-  const safeLang: SupportedLanguage = lang && lang in messages ? (lang as SupportedLanguage) : defaultLanguage;
+  const safeLang: SupportedLanguage =
+    lang && lang in messages ? (lang as SupportedLanguage) : defaultLanguage;
   return resolveNested(messages[safeLang] as unknown as Record<string, unknown>, key) ?? key;
 };

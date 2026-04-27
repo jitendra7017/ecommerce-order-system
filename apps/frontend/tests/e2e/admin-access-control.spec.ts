@@ -28,4 +28,3 @@ test.describe("admin role", () => {
     await expect(page.getByRole("heading", { name: "Admin Products" })).toBeVisible();
   });
 });
-

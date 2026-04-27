@@ -45,7 +45,7 @@ export interface OrderItem {
 export interface Order {
   id: number;
   userId: number;
-  status: "placed" | "cancelled";
+  status: "pending" | "placed" | "confirmed" | "cancelled";
   totalAmount: number;
   createdAt: string;
   updatedAt?: string;

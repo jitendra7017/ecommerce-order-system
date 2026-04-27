@@ -12,7 +12,10 @@ export const cartDocs = {
               schema: {
                 allOf: [
                   { $ref: "#/components/schemas/ApiSuccess" },
-                  { type: "object", properties: { data: { $ref: "#/components/schemas/CartGetData" } } },
+                  {
+                    type: "object",
+                    properties: { data: { $ref: "#/components/schemas/CartGetData" } },
+                  },
                 ],
               },
             },
@@ -40,7 +43,10 @@ export const cartDocs = {
               schema: {
                 allOf: [
                   { $ref: "#/components/schemas/ApiSuccess" },
-                  { type: "object", properties: { data: { $ref: "#/components/schemas/CartItemRow" } } },
+                  {
+                    type: "object",
+                    properties: { data: { $ref: "#/components/schemas/CartItemRow" } },
+                  },
                 ],
               },
             },
@@ -54,7 +60,9 @@ export const cartDocs = {
       tags: ["Cart"],
       summary: "Update cart item quantity",
       security: [{ bearerAuth: [] }],
-      parameters: [{ in: "path", name: "productId", required: true, schema: { type: "integer", minimum: 1 } }],
+      parameters: [
+        { in: "path", name: "productId", required: true, schema: { type: "integer", minimum: 1 } },
+      ],
       requestBody: {
         required: true,
         content: {
@@ -71,7 +79,10 @@ export const cartDocs = {
               schema: {
                 allOf: [
                   { $ref: "#/components/schemas/ApiSuccess" },
-                  { type: "object", properties: { data: { $ref: "#/components/schemas/CartItemRow" } } },
+                  {
+                    type: "object",
+                    properties: { data: { $ref: "#/components/schemas/CartItemRow" } },
+                  },
                 ],
               },
             },
@@ -83,7 +94,9 @@ export const cartDocs = {
       tags: ["Cart"],
       summary: "Remove cart item",
       security: [{ bearerAuth: [] }],
-      parameters: [{ in: "path", name: "productId", required: true, schema: { type: "integer", minimum: 1 } }],
+      parameters: [
+        { in: "path", name: "productId", required: true, schema: { type: "integer", minimum: 1 } },
+      ],
       responses: {
         200: {
           description: "Cart item removed",
@@ -92,7 +105,10 @@ export const cartDocs = {
               schema: {
                 allOf: [
                   { $ref: "#/components/schemas/ApiSuccess" },
-                  { type: "object", properties: { data: { type: "null", nullable: true, example: null } } },
+                  {
+                    type: "object",
+                    properties: { data: { type: "null", nullable: true, example: null } },
+                  },
                 ],
               },
             },

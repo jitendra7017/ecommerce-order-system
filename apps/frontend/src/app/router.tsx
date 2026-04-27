@@ -21,9 +21,7 @@ const router = createBrowserRouter([
       { path: "/auth/register", element: <RegisterPage /> },
       {
         element: <RequireGuestOrCustomer />,
-        children: [
-          { path: "/products", element: <ProductListPage /> },
-        ],
+        children: [{ path: "/products", element: <ProductListPage /> }],
       },
       {
         element: <RequireCustomer />,
@@ -53,4 +51,3 @@ const router = createBrowserRouter([
 export function AppRouter() {
   return <RouterProvider router={router} />;
 }
-

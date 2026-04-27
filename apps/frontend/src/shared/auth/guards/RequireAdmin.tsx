@@ -14,4 +14,3 @@ export function RequireAdmin() {
 
   return <Outlet />;
 }
-

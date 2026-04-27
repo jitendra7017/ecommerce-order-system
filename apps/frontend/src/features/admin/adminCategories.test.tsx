@@ -59,7 +59,9 @@ describe("AdminCategoriesPage", () => {
 
     fireEvent.change(screen.getByLabelText(/name/i), { target: { value: "Accessories" } });
     fireEvent.click(screen.getByRole("button", { name: /save category/i }));
-    await waitFor(() => expect(adminService.createCategory).toHaveBeenCalledWith({ name: "Accessories" }));
+    await waitFor(() =>
+      expect(adminService.createCategory).toHaveBeenCalledWith({ name: "Accessories" }),
+    );
     expect(screen.getByText(/category created/i)).toBeInTheDocument();
   });
 
@@ -83,4 +85,3 @@ describe("AdminCategoriesPage", () => {
     expect(screen.queryByText("Category 1")).not.toBeInTheDocument();
   });
 });
-

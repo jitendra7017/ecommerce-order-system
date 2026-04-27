@@ -1,7 +1,12 @@
 import { http } from "@/shared/api/httpClient";
 import { unwrapApiResponse, type ApiResponse } from "@/shared/api/envelope";
 import { parseAxiosError } from "@/shared/api/errors";
-import type { AddToCartRequest, CartGetResponse, CartItemRow, UpdateCartItemRequest } from "./types";
+import type {
+  AddToCartRequest,
+  CartGetResponse,
+  CartItemRow,
+  UpdateCartItemRequest,
+} from "./types";
 
 export const cartService = {
   async get(): Promise<CartGetResponse> {
@@ -40,4 +45,3 @@ export const cartService = {
     }
   },
 };
-

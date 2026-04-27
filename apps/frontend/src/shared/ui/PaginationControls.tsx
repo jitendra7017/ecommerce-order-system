@@ -9,7 +9,12 @@ export function PaginationControls({ page, totalPages, onPageChange }: Paginatio
 
   return (
     <div className="pagination-row" aria-label="Pagination controls">
-      <button type="button" className="btn btn-secondary" disabled={page <= 1} onClick={() => onPageChange(page - 1)}>
+      <button
+        type="button"
+        className="btn btn-secondary"
+        disabled={page <= 1}
+        onClick={() => onPageChange(page - 1)}
+      >
         Previous
       </button>
       <span className="muted">

@@ -24,4 +24,3 @@ export function parseAxiosError(error: unknown): ApiError {
 
   return new ApiError("Request failed", status);
 }
-

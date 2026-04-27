@@ -132,4 +132,3 @@ describe("admin shell", () => {
     expect(screen.getByText("Login Page")).toBeInTheDocument();
   });
 });
-

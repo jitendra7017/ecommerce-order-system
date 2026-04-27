@@ -22,7 +22,10 @@ export function LoginPage() {
     defaultValues: { email: "", password: "" },
   });
 
-  const fromPath = typeof location.state === "object" && location.state !== null ? (location.state as { from?: string }).from : undefined;
+  const fromPath =
+    typeof location.state === "object" && location.state !== null
+      ? (location.state as { from?: string }).from
+      : undefined;
   const nextPath = fromPath && fromPath.startsWith("/") ? fromPath : "/products";
 
   const onSubmit = async (values: LoginRequest) => {
@@ -33,7 +36,11 @@ export function LoginPage() {
       const claims = decodeJwtClaims(token);
       if (claims?.role === "customer") {
         const guestItems = guestCartService.listItems();
-        await Promise.all(guestItems.map((item) => cartService.add({ productId: item.productId, quantity: item.quantity })));
+        await Promise.all(
+          guestItems.map((item) =>
+            cartService.add({ productId: item.productId, quantity: item.quantity }),
+          ),
+        );
         if (guestItems.length > 0) {
           guestCartService.clear();
         }
@@ -52,7 +59,12 @@ export function LoginPage() {
 
   return (
     <section className="auth-wrap">
-      <form onSubmit={handleSubmit(onSubmit)} aria-label="login-form" noValidate className="panel auth-panel">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        aria-label="login-form"
+        noValidate
+        className="panel auth-panel"
+      >
         <p className="auth-kicker">Welcome back</p>
         <h2 className="panel-title auth-title">Login</h2>
         <p className="auth-subtitle">Sign in to continue shopping and track your orders.</p>
@@ -66,7 +78,9 @@ export function LoginPage() {
         <div className="form-field">
           <label htmlFor="login-password">Password</label>
           <input id="login-password" type="password" className="input" {...register("password")} />
-          {errors.password?.message ? <p className="form-error">{errors.password.message}</p> : null}
+          {errors.password?.message ? (
+            <p className="form-error">{errors.password.message}</p>
+          ) : null}
         </div>
 
         {errors.root?.message ? <p className="form-error">{errors.root.message}</p> : null}
@@ -85,4 +99,3 @@ export function LoginPage() {
     </section>
   );
 }
-

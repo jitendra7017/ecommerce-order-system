@@ -18,7 +18,8 @@ export function useProductListing() {
   const parsedPage = Number(pageText);
   const page = Number.isInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
   const parsedCategory = Number(categoryIdText);
-  const categoryId = Number.isInteger(parsedCategory) && parsedCategory > 0 ? parsedCategory : undefined;
+  const categoryId =
+    Number.isInteger(parsedCategory) && parsedCategory > 0 ? parsedCategory : undefined;
   const limit = 12;
   const session = getSession();
 
@@ -89,7 +90,13 @@ export function useProductListing() {
   });
 
   const changeQuantityMutation = useMutation({
-    mutationFn: async ({ productId, nextQuantity }: { productId: number; nextQuantity: number }) => {
+    mutationFn: async ({
+      productId,
+      nextQuantity,
+    }: {
+      productId: number;
+      nextQuantity: number;
+    }) => {
       if (!session) {
         if (nextQuantity <= 0) {
           guestCartService.remove(productId);
@@ -151,4 +158,3 @@ export function useProductListing() {
     refreshCartQuantities,
   };
 }
-

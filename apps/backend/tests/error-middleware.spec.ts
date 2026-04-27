@@ -30,4 +30,3 @@ describe("error middleware", () => {
     expect(res.body).toEqual({ success: false, message: "Not found", data: null });
   });
 });
-

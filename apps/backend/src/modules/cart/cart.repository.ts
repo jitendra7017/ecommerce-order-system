@@ -8,12 +8,14 @@ export const cartRepository = {
       create: { userId },
     });
   },
+
   getItems(userId: number) {
     return prisma.cartItem.findMany({
       where: { cart: { userId }, product: { deletedAt: null } },
       include: { product: true, cart: true },
     });
   },
+
   async upsertItem(userId: number, productId: number, quantity: number) {
     const cart = await this.getOrCreateCart(userId);
     return prisma.cartItem.upsert({
@@ -22,6 +24,7 @@ export const cartRepository = {
       update: { quantity: { increment: quantity } },
     });
   },
+
   async updateItem(userId: number, productId: number, quantity: number) {
     const cart = await this.getOrCreateCart(userId);
     return prisma.cartItem.update({
@@ -29,10 +32,12 @@ export const cartRepository = {
       data: { quantity },
     });
   },
+
   async removeItem(userId: number, productId: number) {
     const cart = await this.getOrCreateCart(userId);
     return prisma.cartItem.delete({ where: { cartId_productId: { cartId: cart.id, productId } } });
   },
+
   clearByCartId(cartId: number) {
     return prisma.cartItem.deleteMany({ where: { cartId } });
   },

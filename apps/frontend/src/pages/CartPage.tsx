@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCartManagement } from "@/features/cart/useCartManagement";
-import { useToast } from "@/shared/ui/toast/ToastProvider";
+import { useToast } from "@/shared/ui/toast/useToast";
 
 export const CartPage = () => {
-  const { isGuest, cartQuery, updateMutation, removeMutation, placeOrderMutation } = useCartManagement();
+  const { isGuest, cartQuery, updateMutation, removeMutation, placeOrderMutation } =
+    useCartManagement();
   const toast = useToast();
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,7 +23,9 @@ export const CartPage = () => {
 
   if (cartQuery.isLoading) return <p>Loading cart...</p>;
   if (cartQuery.isError) {
-    return <p>{cartQuery.error instanceof Error ? cartQuery.error.message : "Failed to load cart"}</p>;
+    return (
+      <p>{cartQuery.error instanceof Error ? cartQuery.error.message : "Failed to load cart"}</p>
+    );
   }
 
   const cart = cartQuery.data;
@@ -62,7 +65,9 @@ export const CartPage = () => {
                 className="btn btn-secondary"
                 aria-label={`Decrease ${item.name} quantity`}
                 disabled={busy || item.quantity <= 1}
-                onClick={() => updateMutation.mutate({ productId: item.productId, quantity: item.quantity - 1 })}
+                onClick={() =>
+                  updateMutation.mutate({ productId: item.productId, quantity: item.quantity - 1 })
+                }
               >
                 -
               </button>
@@ -70,7 +75,9 @@ export const CartPage = () => {
                 className="btn btn-secondary"
                 aria-label={`Increase ${item.name} quantity`}
                 disabled={busy}
-                onClick={() => updateMutation.mutate({ productId: item.productId, quantity: item.quantity + 1 })}
+                onClick={() =>
+                  updateMutation.mutate({ productId: item.productId, quantity: item.quantity + 1 })
+                }
               >
                 +
               </button>
@@ -96,7 +103,6 @@ export const CartPage = () => {
       >
         Place order
       </button>
-
     </section>
   );
 };

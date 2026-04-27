@@ -61,7 +61,12 @@ describe("CartPage interactions", () => {
     localStorage.setItem("token", "header.eyJpZCI6MSwicm9sZSI6ImN1c3RvbWVyIn0.signature");
     vi.clearAllMocks();
     vi.mocked(cartService.get).mockResolvedValue(cartResponse);
-    vi.mocked(cartService.update).mockResolvedValue({ id: 1, cartId: 4, productId: 101, quantity: 3 });
+    vi.mocked(cartService.update).mockResolvedValue({
+      id: 1,
+      cartId: 4,
+      productId: 101,
+      quantity: 3,
+    });
     vi.mocked(cartService.remove).mockResolvedValue(null);
     vi.mocked(orderService.place).mockResolvedValue(null);
   });
@@ -126,4 +131,3 @@ describe("CartPage interactions", () => {
     expect(await screen.findByText("Insufficient stock")).toBeInTheDocument();
   });
 });
-

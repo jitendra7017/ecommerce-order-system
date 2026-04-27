@@ -17,7 +17,10 @@ export const productDocs = {
               schema: {
                 allOf: [
                   { $ref: "#/components/schemas/ApiSuccess" },
-                  { type: "object", properties: { data: { $ref: "#/components/schemas/ProductListData" } } },
+                  {
+                    type: "object",
+                    properties: { data: { $ref: "#/components/schemas/ProductListData" } },
+                  },
                 ],
               },
             },
@@ -45,14 +48,23 @@ export const productDocs = {
               schema: {
                 allOf: [
                   { $ref: "#/components/schemas/ApiSuccess" },
-                  { type: "object", properties: { data: { $ref: "#/components/schemas/Product" } } },
+                  {
+                    type: "object",
+                    properties: { data: { $ref: "#/components/schemas/Product" } },
+                  },
                 ],
               },
             },
           },
         },
-        401: { description: "Unauthorized", content: { "application/json": { schema: { $ref: "#/components/schemas/ApiError" } } } },
-        403: { description: "Forbidden", content: { "application/json": { schema: { $ref: "#/components/schemas/ApiError" } } } },
+        401: {
+          description: "Unauthorized",
+          content: { "application/json": { schema: { $ref: "#/components/schemas/ApiError" } } },
+        },
+        403: {
+          description: "Forbidden",
+          content: { "application/json": { schema: { $ref: "#/components/schemas/ApiError" } } },
+        },
       },
     },
   },
@@ -61,7 +73,9 @@ export const productDocs = {
       tags: ["Product"],
       summary: "Update product (admin)",
       security: [{ bearerAuth: [] }],
-      parameters: [{ in: "path", name: "id", required: true, schema: { type: "integer", minimum: 1 } }],
+      parameters: [
+        { in: "path", name: "id", required: true, schema: { type: "integer", minimum: 1 } },
+      ],
       requestBody: {
         required: true,
         content: {
@@ -78,7 +92,10 @@ export const productDocs = {
               schema: {
                 allOf: [
                   { $ref: "#/components/schemas/ApiSuccess" },
-                  { type: "object", properties: { data: { $ref: "#/components/schemas/Product" } } },
+                  {
+                    type: "object",
+                    properties: { data: { $ref: "#/components/schemas/Product" } },
+                  },
                 ],
               },
             },
@@ -90,7 +107,9 @@ export const productDocs = {
       tags: ["Product"],
       summary: "Delete product (admin)",
       security: [{ bearerAuth: [] }],
-      parameters: [{ in: "path", name: "id", required: true, schema: { type: "integer", minimum: 1 } }],
+      parameters: [
+        { in: "path", name: "id", required: true, schema: { type: "integer", minimum: 1 } },
+      ],
       responses: {
         200: {
           description: "Product soft deleted",
@@ -99,7 +118,10 @@ export const productDocs = {
               schema: {
                 allOf: [
                   { $ref: "#/components/schemas/ApiSuccess" },
-                  { type: "object", properties: { data: { type: "null", nullable: true, example: null } } },
+                  {
+                    type: "object",
+                    properties: { data: { type: "null", nullable: true, example: null } },
+                  },
                 ],
               },
             },

@@ -72,6 +72,9 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1(express@4.22.1)
     devDependencies:
+      '@eslint/js':
+        specifier: ^9.35.0
+        version: 9.39.1
       '@types/bcrypt':
         specifier: ^5.0.2
         version: 5.0.2
@@ -99,6 +102,18 @@ importers:
       '@types/swagger-ui-express':
         specifier: ^4.1.8
         version: 4.1.8
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^8.43.0
+        version: 8.50.0(@typescript-eslint/parser@8.50.0(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.2))(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.2)
+      '@typescript-eslint/parser':
+        specifier: ^8.43.0
+        version: 8.50.0(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.2)
+      eslint:
+        specifier: ^9.35.0
+        version: 9.39.1(jiti@2.6.1)
+      globals:
+        specifier: ^16.0.0
+        version: 16.5.0
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.15.3)
@@ -217,6 +232,9 @@ importers:
       eslint-plugin-react-refresh:
         specifier: ^0.4.20
         version: 0.4.26(eslint@9.39.1(jiti@2.6.1))
+      globals:
+        specifier: ^16.0.0
+        version: 16.5.0
       jsdom:
         specifier: ^26.1.0
         version: 26.1.0
@@ -2392,6 +2410,10 @@ packages:
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
+    engines: {node: '>=18'}
+
+  globals@16.5.0:
+    resolution: {integrity: sha512-c/c15i26VrJ4IRt5Z89DnIzCGDn9EcebibhAOjw5ibqEHsE1wLUgkPn9RDmNcUKyU87GeaL633nyJ+pplFR2ZQ==}
     engines: {node: '>=18'}
 
   gopd@1.2.0:
@@ -5963,6 +5985,8 @@ snapshots:
       path-is-absolute: 1.0.1
 
   globals@14.0.0: {}
+
+  globals@16.5.0: {}
 
   gopd@1.2.0: {}
 

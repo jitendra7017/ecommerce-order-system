@@ -11,7 +11,11 @@ export const validate =
     });
 
     if (error) {
-      return sendError(res, HTTP_STATUS.BAD_REQUEST, error.details[0]?.message ?? req.t("COMMON.INVALID_PAYLOAD"));
+      return sendError(
+        res,
+        HTTP_STATUS.BAD_REQUEST,
+        error.details[0]?.message ?? req.t("COMMON.INVALID_PAYLOAD"),
+      );
     }
     req.body = value;
     next();

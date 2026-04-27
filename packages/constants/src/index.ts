@@ -4,6 +4,7 @@ export const USER_ROLES = {
 } as const;
 
 export const ORDER_STATUS = {
+  PENDING: "pending",
   PLACED: "placed",
   CANCELLED: "cancelled",
 } as const;

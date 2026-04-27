@@ -9,7 +9,10 @@ export const orderController = {
     sendSuccess(res, HTTP_STATUS.CREATED, req.t("ORDER.PLACED"), data);
   },
   async list(req: Request, res: Response) {
-    const data = await orderService.list(req.user!.id, req.query as unknown as { page?: number; limit?: number });
+    const data = await orderService.list(
+      req.user!.id,
+      req.query as unknown as { page?: number; limit?: number },
+    );
     sendSuccess(res, HTTP_STATUS.OK, req.t("ORDER.FETCHED"), data);
   },
   async cancel(req: Request, res: Response) {

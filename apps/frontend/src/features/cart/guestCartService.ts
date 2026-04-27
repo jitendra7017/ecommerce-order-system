@@ -55,7 +55,9 @@ function toViewModel(items: GuestCartItem[]): CartViewModel {
       subtotal: calculateLineSubtotal(item.quantity, item.unitPrice),
       stock: item.stock,
     })),
-    total: calculateGrandTotal(items.map((item) => ({ quantity: item.quantity, unitPrice: item.unitPrice }))),
+    total: calculateGrandTotal(
+      items.map((item) => ({ quantity: item.quantity, unitPrice: item.unitPrice })),
+    ),
   };
 }
 

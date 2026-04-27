@@ -54,8 +54,9 @@ describe("Product listing feature", () => {
   });
 
   it("renders loading and products with stock status", async () => {
-    // eslint-disable-next-line no-unused-vars
-    let resolveList: (...args: [Awaited<ReturnType<typeof productService.list>>]) => void = () => {};
+    let resolveList: (
+      ...args: [Awaited<ReturnType<typeof productService.list>>]
+    ) => void = () => {};
     vi.mocked(productService.list).mockImplementation(
       () =>
         new Promise((resolve) => {
@@ -156,7 +157,9 @@ describe("Product listing feature", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /add phone to cart/i }));
 
-    await waitFor(() => expect(cartService.add).toHaveBeenCalledWith({ productId: 1, quantity: 1 }));
+    await waitFor(() =>
+      expect(cartService.add).toHaveBeenCalledWith({ productId: 1, quantity: 1 }),
+    );
     expect(screen.getByText(/added to cart/i)).toBeInTheDocument();
   });
 
@@ -263,4 +266,3 @@ describe("Product listing feature", () => {
     );
   });
 });
-

@@ -48,7 +48,8 @@ export const OrderHistoryPage = () => {
                   <div key={item.id} className="order-item-row">
                     <p className="order-item-name">Product {item.productId}</p>
                     <p className="order-item-meta">
-                      Qty {item.quantity} <span aria-hidden="true">•</span> Unit ${Number(item.unitPrice)}
+                      Qty {item.quantity} <span aria-hidden="true">•</span> Unit $
+                      {Number(item.unitPrice)}
                     </p>
                   </div>
                 ))}

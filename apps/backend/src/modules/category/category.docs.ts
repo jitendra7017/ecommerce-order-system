@@ -44,7 +44,10 @@ export const categoryDocs = {
               schema: {
                 allOf: [
                   { $ref: "#/components/schemas/ApiSuccess" },
-                  { type: "object", properties: { data: { $ref: "#/components/schemas/Category" } } },
+                  {
+                    type: "object",
+                    properties: { data: { $ref: "#/components/schemas/Category" } },
+                  },
                 ],
               },
             },

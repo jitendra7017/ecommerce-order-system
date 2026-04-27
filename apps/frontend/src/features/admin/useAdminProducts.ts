@@ -39,4 +39,3 @@ export function useAdminProducts(page = 1, limit = 10) {
 
   return { categoriesQuery, productsQuery, createMutation, updateMutation, deleteMutation };
 }
-

@@ -41,7 +41,8 @@ export function mapCartResponseToViewModel(payload: CartGetResponse): CartViewMo
   const items = payload.items.map(toLineItem);
   return {
     items,
-    total: calculateGrandTotal(items.map((i) => ({ quantity: i.quantity, unitPrice: i.unitPrice }))),
+    total: calculateGrandTotal(
+      items.map((i) => ({ quantity: i.quantity, unitPrice: i.unitPrice })),
+    ),
   };
 }
-

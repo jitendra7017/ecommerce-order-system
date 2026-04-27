@@ -1,24 +1,11 @@
-import { createContext, useCallback, useContext, useMemo, useState, type PropsWithChildren } from "react";
-
-type ToastKind = "success" | "error" | "info";
+import { useCallback, useMemo, useState, type PropsWithChildren } from "react";
+import { ToastContext, type ToastApi, type ToastKind } from "./toast-context";
 
 type ToastItem = {
   id: number;
   message: string;
   kind: ToastKind;
 };
-
-type ToastApi = {
-  success: (message: string) => void;
-  error: (message: string) => void;
-  info: (message: string) => void;
-};
-
-const ToastContext = createContext<ToastApi>({
-  success: () => undefined,
-  error: () => undefined,
-  info: () => undefined,
-});
 
 let toastCounter = 0;
 
@@ -54,7 +41,12 @@ export function ToastProvider({ children }: PropsWithChildren) {
         {toasts.map((toast) => (
           <div key={toast.id} className={`toast toast-${toast.kind}`} role="status">
             <span>{toast.message}</span>
-            <button type="button" className="toast-close" onClick={() => removeToast(toast.id)} aria-label="Dismiss notification">
+            <button
+              type="button"
+              className="toast-close"
+              onClick={() => removeToast(toast.id)}
+              aria-label="Dismiss notification"
+            >
               x
             </button>
           </div>
@@ -62,8 +54,4 @@ export function ToastProvider({ children }: PropsWithChildren) {
       </div>
     </ToastContext.Provider>
   );
-}
-
-export function useToast() {
-  return useContext(ToastContext);
 }

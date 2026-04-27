@@ -14,4 +14,3 @@ export const adminProductSchema = z.object({
 export const adminCategorySchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
 });
-

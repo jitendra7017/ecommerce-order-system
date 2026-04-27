@@ -8,4 +8,3 @@ export const addToCartSchema = z.object({
 export const updateCartItemSchema = z.object({
   quantity: z.number().int().positive(),
 });
-

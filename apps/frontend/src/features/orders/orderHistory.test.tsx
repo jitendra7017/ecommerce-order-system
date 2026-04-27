@@ -97,7 +97,10 @@ describe("Order history", () => {
     fireEvent.click(toggleButton);
     expect(screen.getByText(/product 101/i)).toBeInTheDocument();
     expect(screen.getByText(/qty 2/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /hide items for order 10/i })).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByRole("button", { name: /hide items for order 10/i })).toHaveAttribute(
+      "aria-expanded",
+      "true",
+    );
 
     fireEvent.click(screen.getByRole("button", { name: /hide items for order 10/i }));
     expect(screen.queryByText(/product 101/i)).not.toBeInTheDocument();
@@ -145,4 +148,3 @@ describe("Order history", () => {
     expect(orderService.list).toHaveBeenLastCalledWith({ page: 2, limit: 10 });
   });
 });
-

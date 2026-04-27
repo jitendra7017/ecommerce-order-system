@@ -4,4 +4,3 @@ test("app loads", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveTitle(/E-commerce Order System/i);
 });
-

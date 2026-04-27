@@ -39,4 +39,3 @@ export function getSession(): { token: string; claims: SessionClaims } | null {
   if (!claims) return null;
   return { token, claims };
 }
-

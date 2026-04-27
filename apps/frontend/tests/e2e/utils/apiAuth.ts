@@ -28,4 +28,3 @@ export async function apiLogin(email: string, password: string): Promise<string>
   }
   return token;
 }
-

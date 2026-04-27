@@ -5,7 +5,7 @@ import { useAdminCategories } from "@/features/admin/useAdminCategories";
 import { adminCategorySchema } from "@/features/admin/schemas";
 import type { CreateCategoryRequest } from "@/features/categories/types";
 import { PaginationControls } from "@/shared/ui/PaginationControls";
-import { useToast } from "@/shared/ui/toast/ToastProvider";
+import { useToast } from "@/shared/ui/toast/useToast";
 
 export function AdminCategoriesPage() {
   const { categoriesQuery, createMutation } = useAdminCategories();
@@ -40,13 +40,18 @@ export function AdminCategoriesPage() {
 
   useEffect(() => {
     if (createMutation.isError) {
-      toast.error(createMutation.error instanceof Error ? createMutation.error.message : "Category create failed");
+      toast.error(
+        createMutation.error instanceof Error
+          ? createMutation.error.message
+          : "Category create failed",
+      );
     }
   }, [createMutation.error, createMutation.isError, toast]);
 
   const busy = isSubmitting || createMutation.isPending;
   const categoryName = watch("name");
-  const isSaveEnabled = !busy && typeof categoryName === "string" && categoryName.trim().length >= 2;
+  const isSaveEnabled =
+    !busy && typeof categoryName === "string" && categoryName.trim().length >= 2;
   const categories = categoriesQuery.data ?? [];
   const totalPages = Math.max(1, Math.ceil(categories.length / pageSize));
   const visibleCategories = categories.slice((page - 1) * pageSize, page * pageSize);
@@ -59,7 +64,13 @@ export function AdminCategoriesPage() {
 
   if (categoriesQuery.isLoading) return <p>Loading categories...</p>;
   if (categoriesQuery.isError) {
-    return <p>{categoriesQuery.error instanceof Error ? categoriesQuery.error.message : "Failed to load categories"}</p>;
+    return (
+      <p>
+        {categoriesQuery.error instanceof Error
+          ? categoriesQuery.error.message
+          : "Failed to load categories"}
+      </p>
+    );
   }
 
   const openCreateModal = () => {
@@ -95,11 +106,21 @@ export function AdminCategoriesPage() {
           <div className="modal-card">
             <div className="modal-header">
               <h3 className="panel-title">Create category</h3>
-              <button type="button" className="btn btn-secondary" onClick={closeModal} disabled={busy}>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={closeModal}
+                disabled={busy}
+              >
                 Close
               </button>
             </div>
-            <form id="admin-category-form" onSubmit={handleSubmit(onSubmit)} noValidate className="form-grid">
+            <form
+              id="admin-category-form"
+              onSubmit={handleSubmit(onSubmit)}
+              noValidate
+              className="form-grid"
+            >
               <div className="form-field">
                 <label htmlFor="category-name">
                   Name <span className="required-asterisk">*</span>
@@ -109,7 +130,12 @@ export function AdminCategoriesPage() {
               </div>
             </form>
             <div className="form-actions">
-              <button type="submit" form="admin-category-form" className="btn btn-primary" disabled={!isSaveEnabled}>
+              <button
+                type="submit"
+                form="admin-category-form"
+                className="btn btn-primary"
+                disabled={!isSaveEnabled}
+              >
                 Save category
               </button>
             </div>
@@ -119,4 +145,3 @@ export function AdminCategoriesPage() {
     </section>
   );
 }
-

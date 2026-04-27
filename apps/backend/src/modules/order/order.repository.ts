@@ -1,10 +1,17 @@
+import { OrderStatus } from "@prisma/client";
 import { ORDER_STATUS } from "@repo/constants";
 import { AppError, ERROR_CODE } from "@repo/errors";
 import { prisma } from "../../lib/prisma.js";
-import type { LockedProductRow } from "./order.types.js";
-
-type TransactionClient = Omit<typeof prisma, "$connect" | "$disconnect" | "$on" | "$transaction" | "$extends">;
-type TransactionCartItem = { productId: number; quantity: number };
+import {
+  computeOrderTotal,
+  decrementStockForLines,
+  incrementStockForOrderItems,
+  indexProductsById,
+  lockUserCartRowOrThrow,
+  selectLockedProductRows,
+  validateStockForCheckout,
+} from "./order-transaction.helpers.js";
+import type { CheckoutCartLine, OrderTransactionClient } from "./order.types.js";
 
 export const orderRepository = {
   getUserCart: (userId: number) =>
@@ -12,6 +19,7 @@ export const orderRepository = {
       where: { userId },
       include: { items: { include: { product: true } } },
     }),
+
   getOrdersByUser: (userId: number, page: number, limit: number) =>
     prisma.order.findMany({
       where: { userId, deletedAt: null },
@@ -20,77 +28,84 @@ export const orderRepository = {
       skip: (page - 1) * limit,
       take: limit,
     }),
+
   countOrdersByUser: (userId: number) =>
     prisma.order.count({
       where: { userId, deletedAt: null },
     }),
+
+  /**
+   * Checkout uses two layers of pessimistic locking: the cart row (serialization / idempotency)
+   * and product rows (inventory correctness under concurrency). See helpers for details.
+   */
   createOrderWithTransaction: async (userId: number) =>
-    prisma.$transaction(async (tx: TransactionClient) => {
+    prisma.$transaction(async (tx: OrderTransactionClient) => {
+      await lockUserCartRowOrThrow(tx, userId);
+
       const cart = await tx.cart.findUnique({
         where: { userId },
         include: { items: true },
       });
 
-      if (!cart || cart.items.length === 0) throw new AppError(ERROR_CODE.CART_EMPTY);
-
-      const cartItems = cart.items as TransactionCartItem[];
-      const productIds = cartItems.map((item: TransactionCartItem) => item.productId);
-      const lockedRows = (await tx.$queryRawUnsafe(
-        `SELECT id, stock, price FROM Product WHERE id IN (${productIds.join(",")}) AND deletedAt IS NULL FOR UPDATE`,
-      )) as LockedProductRow[];
-
-      const productById = new Map(lockedRows.map((row) => [row.id, row]));
-      for (const item of cartItems) {
-        const product = productById.get(item.productId);
-        if (!product || product.stock < item.quantity) {
-          throw new AppError(ERROR_CODE.INSUFFICIENT_STOCK, { productId: item.productId });
-        }
+      if (!cart || cart.items.length === 0) {
+        throw new AppError(ERROR_CODE.CART_EMPTY);
       }
 
-      const totalAmount = cartItems.reduce((sum: number, item: TransactionCartItem) => {
-        const product = productById.get(item.productId)!;
-        return sum + item.quantity * Number(product.price);
-      }, 0);
+      const lines = cart.items as CheckoutCartLine[];
+      const productIds = lines.map((line) => line.productId);
+
+      const lockedRows = await selectLockedProductRows(tx, productIds);
+      const productById = indexProductsById(lockedRows);
+
+      validateStockForCheckout(lines, productById);
+
+      const totalAmount = computeOrderTotal(lines, productById);
 
       const order = await tx.order.create({
         data: {
           userId,
           totalAmount,
+          status: OrderStatus.placed,
         },
       });
 
       await tx.orderItem.createMany({
-        data: cartItems.map((item: TransactionCartItem) => {
-          const product = productById.get(item.productId)!;
+        data: lines.map((line) => {
+          const product = productById.get(line.productId)!;
           return {
             orderId: order.id,
-            productId: item.productId,
-            quantity: item.quantity,
-            unitPrice: Number(product.price),
+            productId: line.productId,
+            quantity: line.quantity,
+            unitPrice: product.price,
           };
         }),
       });
 
-      for (const item of cartItems) {
-        await tx.product.update({
-          where: { id: item.productId },
-          data: { stock: { decrement: item.quantity } },
-        });
-      }
-
+      await decrementStockForLines(tx, lines);
       await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
+
       return tx.order.findUnique({ where: { id: order.id }, include: { items: true } });
     }),
-  cancelOrderWithTransaction: async (userId: number, orderId: number) =>
-    prisma.$transaction(async (tx: TransactionClient) => {
-      const order = await tx.order.findFirst({ where: { id: orderId, userId, deletedAt: null }, include: { items: true } });
-      if (!order) throw new AppError(ERROR_CODE.ORDER_NOT_FOUND);
-      if (order.status === ORDER_STATUS.CANCELLED) throw new AppError(ERROR_CODE.ORDER_ALREADY_CANCELLED);
 
-      for (const item of order.items) {
-        await tx.product.update({ where: { id: item.productId }, data: { stock: { increment: item.quantity } } });
+  cancelOrderWithTransaction: async (userId: number, orderId: number) =>
+    prisma.$transaction(async (tx: OrderTransactionClient) => {
+      const order = await tx.order.findFirst({
+        where: { id: orderId, userId, deletedAt: null },
+        include: { items: true },
+      });
+      if (!order) {
+        throw new AppError(ERROR_CODE.ORDER_NOT_FOUND);
+      }
+      if (order.status === ORDER_STATUS.CANCELLED) {
+        throw new AppError(ERROR_CODE.ORDER_ALREADY_CANCELLED);
       }
 
-      return tx.order.update({ where: { id: orderId }, data: { status: ORDER_STATUS.CANCELLED }, include: { items: true } });
+      await incrementStockForOrderItems(tx, order.items);
+
+      return tx.order.update({
+        where: { id: orderId },
+        data: { status: OrderStatus.cancelled },
+        include: { items: true },
+      });
     }),
 };

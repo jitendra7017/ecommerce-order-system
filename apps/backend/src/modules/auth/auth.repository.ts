@@ -9,6 +9,7 @@ export const authRepository = {
         deletedAt: null,
       },
     }),
+
   findById: (id: number) =>
     prisma.user.findFirst({
       where: {
@@ -16,6 +17,7 @@ export const authRepository = {
         deletedAt: null,
       },
     }),
+
   createUser: (payload: { firstName: string; lastName: string; email: string; password: string }) =>
     prisma.user.create({
       data: {

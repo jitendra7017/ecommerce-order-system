@@ -28,4 +28,3 @@ describe("parseAxiosError", () => {
     expect(parsed.status).toBe(500);
   });
 });
-

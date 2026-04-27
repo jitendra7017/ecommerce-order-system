@@ -5,7 +5,9 @@ function uniqueEmail(prefix = "e2e.customer") {
   return `${prefix}.${stamp}@example.com`;
 }
 
-test("customer: register/login, browse, cart updates, place order, view history", async ({ page }) => {
+test("customer: register/login, browse, cart updates, place order, view history", async ({
+  page,
+}) => {
   const email = uniqueEmail();
   const password = "pw12345";
 
@@ -65,4 +67,3 @@ test("customer: register/login, browse, cart updates, place order, view history"
   await page.getByRole("button", { name: "Logout" }).click();
   await expect(page).toHaveURL(/\/auth\/login$/);
 });
-

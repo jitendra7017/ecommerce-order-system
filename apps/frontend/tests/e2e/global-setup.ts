@@ -41,7 +41,14 @@ export default async function globalSetup(config: FullConfig) {
     ],
   });
 
-  await writeFile(join(storageDir, "customer.json"), JSON.stringify(mkState(customerToken), null, 2), "utf-8");
-  await writeFile(join(storageDir, "admin.json"), JSON.stringify(mkState(adminToken), null, 2), "utf-8");
+  await writeFile(
+    join(storageDir, "customer.json"),
+    JSON.stringify(mkState(customerToken), null, 2),
+    "utf-8",
+  );
+  await writeFile(
+    join(storageDir, "admin.json"),
+    JSON.stringify(mkState(adminToken), null, 2),
+    "utf-8",
+  );
 }
-

@@ -15,4 +15,3 @@ export function unwrapApiResponse<T>(payload: ApiResponse<T>): T {
   }
   return payload.data;
 }
-

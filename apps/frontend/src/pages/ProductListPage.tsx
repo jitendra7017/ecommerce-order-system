@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { ProductCard } from "@/features/products/components/ProductCard";
 import { useProductListing } from "@/features/products/useProductListing";
 import { PaginationControls } from "@/shared/ui/PaginationControls";
-import { useToast } from "@/shared/ui/toast/ToastProvider";
+import { useToast } from "@/shared/ui/toast/useToast";
 
 export const ProductListPage = () => {
   const {
@@ -84,7 +84,13 @@ export const ProductListPage = () => {
   }
 
   if (productsQuery.isError) {
-    return <p>{productsQuery.error instanceof Error ? productsQuery.error.message : "Failed to load products"}</p>;
+    return (
+      <p>
+        {productsQuery.error instanceof Error
+          ? productsQuery.error.message
+          : "Failed to load products"}
+      </p>
+    );
   }
 
   return (
@@ -143,7 +149,6 @@ export const ProductListPage = () => {
           : null}
       </div>
       <PaginationControls page={page} totalPages={totalPages} onPageChange={updatePage} />
-
     </section>
   );
 };

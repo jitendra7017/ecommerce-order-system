@@ -27,7 +27,11 @@ export const ProductCard = memo(function ProductCard({
       <p className="muted">${product.price}</p>
       <p>{product.stock > 0 ? `In stock (${product.stock})` : "Out of stock"}</p>
       {quantity > 0 ? (
-        <div className="qty-stepper" role="group" aria-label={`Quantity selector for ${product.name}`}>
+        <div
+          className="qty-stepper"
+          role="group"
+          aria-label={`Quantity selector for ${product.name}`}
+        >
           <button
             type="button"
             className="qty-stepper-btn"

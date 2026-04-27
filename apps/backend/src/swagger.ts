@@ -202,7 +202,11 @@ export const swaggerSpec = swaggerJsdoc({
           properties: {
             id: { type: "integer", example: 44 },
             userId: { type: "integer", example: 5 },
-            status: { type: "string", enum: ["pending", "placed", "confirmed", "cancelled"], example: "placed" },
+            status: {
+              type: "string",
+              enum: ["pending", "placed", "confirmed", "cancelled"],
+              example: "placed",
+            },
             totalAmount: { type: "number", example: 1399.98 },
             createdAt: { type: "string", format: "date-time" },
             updatedAt: { type: "string", format: "date-time" },

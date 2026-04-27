@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { authService } from "@/features/auth/authService";
 import { registerSchema } from "@/features/auth/schemas";
 import type { RegisterRequest } from "@/features/auth/types";
-import { useToast } from "@/shared/ui/toast/ToastProvider";
+import { useToast } from "@/shared/ui/toast/useToast";
 
 export function RegisterPage() {
   const navigate = useNavigate();
@@ -20,7 +20,10 @@ export function RegisterPage() {
     defaultValues: { firstName: "", lastName: "", email: "", password: "" },
   });
 
-  const fromPath = typeof location.state === "object" && location.state !== null ? (location.state as { from?: string }).from : undefined;
+  const fromPath =
+    typeof location.state === "object" && location.state !== null
+      ? (location.state as { from?: string }).from
+      : undefined;
   const nextPath = fromPath && fromPath.startsWith("/") ? fromPath : "/products";
 
   const onSubmit = async (values: RegisterRequest) => {
@@ -36,22 +39,43 @@ export function RegisterPage() {
 
   return (
     <section className="auth-wrap">
-      <form onSubmit={handleSubmit(onSubmit)} aria-label="register-form" noValidate className="panel auth-panel">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        aria-label="register-form"
+        noValidate
+        className="panel auth-panel"
+      >
         <p className="auth-kicker">Get started</p>
         <h2 className="panel-title auth-title">Create your account</h2>
-        <p className="auth-subtitle">Join to place orders faster and track delivery status in one place.</p>
+        <p className="auth-subtitle">
+          Join to place orders faster and track delivery status in one place.
+        </p>
 
         <div className="form-grid">
           <div className="form-field">
             <label htmlFor="register-first-name">First name</label>
-            <input id="register-first-name" type="text" className="input" {...register("firstName")} />
-            {errors.firstName?.message ? <p className="form-error">{errors.firstName.message}</p> : null}
+            <input
+              id="register-first-name"
+              type="text"
+              className="input"
+              {...register("firstName")}
+            />
+            {errors.firstName?.message ? (
+              <p className="form-error">{errors.firstName.message}</p>
+            ) : null}
           </div>
 
           <div className="form-field">
             <label htmlFor="register-last-name">Last name</label>
-            <input id="register-last-name" type="text" className="input" {...register("lastName")} />
-            {errors.lastName?.message ? <p className="form-error">{errors.lastName.message}</p> : null}
+            <input
+              id="register-last-name"
+              type="text"
+              className="input"
+              {...register("lastName")}
+            />
+            {errors.lastName?.message ? (
+              <p className="form-error">{errors.lastName.message}</p>
+            ) : null}
           </div>
         </div>
 
@@ -63,8 +87,15 @@ export function RegisterPage() {
 
         <div className="form-field">
           <label htmlFor="register-password">Password</label>
-          <input id="register-password" type="password" className="input" {...register("password")} />
-          {errors.password?.message ? <p className="form-error">{errors.password.message}</p> : null}
+          <input
+            id="register-password"
+            type="password"
+            className="input"
+            {...register("password")}
+          />
+          {errors.password?.message ? (
+            <p className="form-error">{errors.password.message}</p>
+          ) : null}
         </div>
 
         {errors.root?.message ? <p className="form-error">{errors.root.message}</p> : null}
@@ -83,4 +114,3 @@ export function RegisterPage() {
     </section>
   );
 }
-

@@ -5,7 +5,8 @@ import type { ProductListResponse } from "@/features/products/types";
 
 export const authApi = {
   register: (email: string, password: string) => api.post("/auth/register", { email, password }),
-  login: (email: string, password: string) => api.post<ApiResponse<{ token: string }>>("/auth/login", { email, password }),
+  login: (email: string, password: string) =>
+    api.post<ApiResponse<{ token: string }>>("/auth/login", { email, password }),
 };
 
 export const productApi = {

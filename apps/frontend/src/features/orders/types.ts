@@ -13,4 +13,3 @@ export type OrderListResponse = {
 };
 export type PlaceOrderResponse = Order | null;
 export type CancelOrderResponse = Order;
-

@@ -21,4 +21,3 @@ export type UpsertProductRequest = {
   stock: number;
   categoryId: number;
 };
-

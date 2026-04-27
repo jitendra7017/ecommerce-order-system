@@ -14,15 +14,20 @@ export const cartService = {
     }
     return cartRepository.upsertItem(userId, productId, quantity);
   },
+
   async update(userId: number, productId: number, quantity: number) {
     return cartRepository.updateItem(userId, productId, quantity);
   },
+
   async remove(userId: number, productId: number) {
     return cartRepository.removeItem(userId, productId);
   },
+
   async get(userId: number) {
     const items = await cartRepository.getItems(userId);
-    const total = calculateTotal(items.map((item) => ({ quantity: item.quantity, unitPrice: Number(item.product.price) })));
+    const total = calculateTotal(
+      items.map((item) => ({ quantity: item.quantity, unitPrice: Number(item.product.price) })),
+    );
     return { items, total };
   },
 };

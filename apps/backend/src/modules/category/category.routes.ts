@@ -9,4 +9,10 @@ import { asyncHandler } from "../../middleware/async-handler.js";
 export const categoryRouter = Router();
 
 categoryRouter.get("/", asyncHandler(categoryController.list));
-categoryRouter.post("/", authGuard, roleGuard(USER_ROLES.ADMIN), validate(createCategorySchema), asyncHandler(categoryController.create));
+categoryRouter.post(
+  "/",
+  authGuard,
+  roleGuard(USER_ROLES.ADMIN),
+  validate(createCategorySchema),
+  asyncHandler(categoryController.create),
+);

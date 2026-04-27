@@ -20,4 +20,3 @@ test("admin: login opens /admin in a new tab", async ({ page }) => {
   // Original tab continues to products per current login flow
   await expect(page).toHaveURL(/\/products$/);
 });
-

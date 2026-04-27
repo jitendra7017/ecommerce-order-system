@@ -5,15 +5,26 @@ export const productRepository = {
     prisma.product.findFirst({
       where: { id, deletedAt: null },
     }),
-  create: (data: { name: string; description?: string; price: number; stock: number; categoryId: number }) =>
-    prisma.product.create({ data }),
-  update: (id: number, data: { name: string; description?: string; price: number; stock: number; categoryId: number }) =>
-    prisma.product.update({ where: { id }, data }),
+
+  create: (data: {
+    name: string;
+    description?: string;
+    price: number;
+    stock: number;
+    categoryId: number;
+  }) => prisma.product.create({ data }),
+
+  update: (
+    id: number,
+    data: { name: string; description?: string; price: number; stock: number; categoryId: number },
+  ) => prisma.product.update({ where: { id }, data }),
+
   remove: (id: number) =>
     prisma.product.update({
       where: { id },
       data: { deletedAt: new Date() },
     }),
+
   list: (page: number, limit: number, search?: string, categoryId?: number) =>
     prisma.product.findMany({
       where: {
@@ -25,6 +36,7 @@ export const productRepository = {
       take: limit,
       orderBy: { createdAt: "desc" },
     }),
+
   count: (search?: string, categoryId?: number) =>
     prisma.product.count({
       where: {
